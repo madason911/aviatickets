@@ -12,7 +12,6 @@ const SegmentBody = ({
   const depTime = moment(departureDate).format("hh:mm");
   const arrDate = moment(arrivalDate).format("D MMM ddd");
   const arrTime = moment(arrivalDate).format("hh:mm");
-  //   console.log(date.format("hh:mm, D MMM ddd"));
 
   const separator = {
     borderBottom: "1px solid",
@@ -34,8 +33,6 @@ const SegmentBody = ({
     <>
       <div className="ticket-segment_body d-flex justify-content-between p-2">
         <div className="segment-body_endpoint origin d-flex">
-          {/* <span>20:40 --</span>
-                <p>18 авг. вт</p> */}
           <p>
             {depTime}
             <span className="text-primary ms-1">{depDate}</span>
@@ -48,8 +45,6 @@ const SegmentBody = ({
           </span>
         </div>
         <div className="segment-body_endpoint destination d-flex">
-          {/* <p>19 авг. ср --</p>
-                <span> 09:25</span> */}
           <p>
             <span className="text-primary me-1">{arrDate}</span>
             {arrTime}

@@ -6,10 +6,10 @@ import TransfersCountFilter from "./transfersCountFilter";
 
 const Filters = ({
   onSort,
-  onChange,
+  onAmountChange,
   defaultAmountState,
   airlineState,
-  onAirline,
+  onAirlineChange,
   onTransferChange,
   isValidInput,
 }) => {
@@ -22,10 +22,13 @@ const Filters = ({
       <TransfersCountFilter onTransferChange={onTransferChange} />
       <AmountFilter
         isValidInput={isValidInput}
-        onChange={onChange}
+        onAmountChange={onAmountChange}
         defaultAmountState={defaultAmountState}
       />
-      <AirlineFilter airlineState={airlineState} onAirline={onAirline} />
+      <AirlineFilter
+        airlineState={airlineState}
+        onAirlineChange={onAirlineChange}
+      />
     </div>
   );
 };

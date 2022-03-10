@@ -1,9 +1,6 @@
 import React from "react";
 
-const AirlineFilter = ({ airlineState, onAirline }) => {
-  // const handleChecked = (e) => {
-  //   onAirline(e);
-  // };
+const AirlineFilter = ({ airlineState, onAirlineChange }) => {
   const airline = {
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -24,7 +21,11 @@ const AirlineFilter = ({ airlineState, onAirline }) => {
             className="d-flex justify-content-between p-1 align-items-center"
             key={item}
           >
-            <input type="checkbox" onChange={onAirline} name={`${item}`} />
+            <input
+              type="checkbox"
+              onChange={onAirlineChange}
+              name={`${item}`}
+            />
             <p className="ms-1" style={airline}>
               {" "}
               {item}{" "}

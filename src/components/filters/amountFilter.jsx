@@ -1,9 +1,6 @@
 import React from "react";
 
-const AmountFilter = ({ defaultAmountState, onChange, isValidInput }) => {
-  const handleChange = (event) => {
-    onChange(event);
-  };
+const AmountFilter = ({ defaultAmountState, onAmountChange, isValidInput }) => {
   return (
     <div className="amountFilter">
       <h5 className="fw-bold">Цена</h5>
@@ -13,7 +10,7 @@ const AmountFilter = ({ defaultAmountState, onChange, isValidInput }) => {
           type="text"
           name="lower"
           value={defaultAmountState.lower}
-          onChange={handleChange}
+          onChange={onAmountChange}
         />
       </div>
       <div className="higherLimit d-flex m-2">
@@ -22,7 +19,7 @@ const AmountFilter = ({ defaultAmountState, onChange, isValidInput }) => {
           type="text"
           name="upper"
           value={defaultAmountState.upper}
-          onChange={handleChange}
+          onChange={onAmountChange}
         />
       </div>
       {isValidInput ? "" : <p className="text-danger">Данные некорректны!</p>}

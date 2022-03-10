@@ -1,4 +1,4 @@
-import Flights from "./layouts/filghts";
+import Flights from "./layouts/flights";
 
 function App() {
   return <Flights />;

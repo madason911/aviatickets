@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import flights from "../db/flights.json";
-import Filters from "./filters";
-import TicketList from "./ticketList";
+import flights from "../../db/flights.json";
+import { paginate } from "../../utils/paginate";
+import Pagination from "../common/pagination";
+import Filters from "../filters/filters";
+import TicketList from "../ui/ticketList";
 
 const FlightsListPage = () => {
   const [selectedAirline, setSelectedAirline] = useState([]);
   const [selectedTransfer, setSelectedTransfer] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState({ path: "amount", order: "asc" });
   const [amountState, setAmountState] = useState({
     lower: "0",
     upper: "1000000",
   });
-  const [flightList, setFlightList] = useState(
-    flights.result.flights.slice(0, 30)
-  );
+  const [flightList] = useState(flights.result.flights.slice(0, 50));
   const [airlineState] = useState(getAirlines(flights.result.flights));
+  const pageSize = 8;
 
   function getAirlines(data) {
     const result = {};
@@ -55,6 +57,15 @@ const FlightsListPage = () => {
     return data;
   }
 
+  const filterAirlines = (data, airlines) => {
+    if (airlines.length) {
+      return data.filter((item) => {
+        return airlines.includes(item.flight.carrier.caption);
+      });
+    }
+    return data;
+  };
+
   const isValidInput =
     +amountState.lower < +amountState.upper &&
     !isNaN(Number(amountState.lower)) &&
@@ -69,10 +80,6 @@ const FlightsListPage = () => {
       });
     }
     return data;
-  };
-
-  const handleTransferChange = (item) => {
-    setSelectedTransfer(item);
   };
 
   const flightsSorting = (array, path, order) => {
@@ -107,34 +114,24 @@ const FlightsListPage = () => {
     }
     return [...array];
   };
-
-  const filterAirlines = (data, airlines) => {
-    if (airlines.length) {
-      return data.filter((item) => {
-        return airlines.includes(item.flight.carrier.caption);
-      });
-    }
-    return data;
-  };
-
-  const handleSort = (item) => {
-    setSortBy(item);
-  };
-
   const wrapper = {
     width: "max-content",
     fontFamily: "Roboto",
     background: "#f0f1f4",
   };
 
-  const handleChange = (e) => {
+  const handleSort = (item) => {
+    setSortBy(item);
+  };
+
+  const handleAmountChange = (e) => {
     setAmountState((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const handleAirline = (e) => {
+  const handleAirlineChange = (e) => {
     if (e.target.checked) {
       setSelectedAirline((prev) => [...prev, e.target.name]);
     } else {
@@ -144,11 +141,22 @@ const FlightsListPage = () => {
     }
   };
 
+  const handleTransferChange = (item) => {
+    setSelectedTransfer(item);
+  };
+
+  const handlePageChange = (pageIndex) => {
+    setCurrentPage(pageIndex);
+  };
+
   const filteredFlights = filterFlightsByAmount(flightList);
   const newFilteredFlights = filterAirlines(filteredFlights, selectedAirline);
 
   const newList = flightsSorting(newFilteredFlights, sortBy.path, sortBy.order);
   const updatedList = filterTransfer(newList);
+
+  const flightsCount = updatedList.length;
+  const flightsCrop = paginate(updatedList, currentPage, pageSize);
 
   return (
     <div
@@ -157,14 +165,24 @@ const FlightsListPage = () => {
     >
       <Filters
         onSort={handleSort}
-        onChange={handleChange}
-        onAirline={handleAirline}
+        onAmountChange={handleAmountChange}
+        onAirlineChange={handleAirlineChange}
         onTransferChange={handleTransferChange}
         defaultAmountState={amountState}
         airlineState={airlineState}
         isValidInput={isValidInput}
       />
-      <TicketList flights={updatedList} />
+      <div>
+        <TicketList flights={flightsCrop} />
+        <div className="d-flex justify-content-center">
+          <Pagination
+            onPageChange={handlePageChange}
+            itemsCount={flightsCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+          />
+        </div>
+      </div>
     </div>
   );
 };
