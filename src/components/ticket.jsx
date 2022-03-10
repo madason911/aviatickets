@@ -5,6 +5,7 @@ import TicketLegs from "./ticketLegs";
 const Ticket = ({ flight }) => {
   const styleForTicket = {
     background: "#fff",
+    width: "700px",
   };
   return (
     <div className="ticket m-5" style={styleForTicket}>

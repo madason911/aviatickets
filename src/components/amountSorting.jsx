@@ -6,7 +6,7 @@ const AmountSorting = ({ onSort }) => {
   };
   return (
     <>
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center p-1">
         <input
           type="radio"
           name="Sorting"
@@ -14,7 +14,7 @@ const AmountSorting = ({ onSort }) => {
         />
         <p className="ms-1"> - по возрастанию цены</p>
       </div>
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center p-1">
         <input
           type="radio"
           name="Sorting"

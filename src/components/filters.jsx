@@ -4,16 +4,28 @@ import AmountFilter from "./amountFilter";
 import Sortings from "./sortings";
 import TransfersCountFilter from "./transfersCountFilter";
 
-const Filters = ({ onSort, onChange, defaultAmountState }) => {
+const Filters = ({
+  onSort,
+  onChange,
+  defaultAmountState,
+  airlineState,
+  onAirline,
+  onTransferChange,
+  isValidInput,
+}) => {
+  const filters = {
+    width: "20%",
+  };
   return (
-    <div className="filters-sortings p-3 mt-5">
+    <div className="filters-sortings p-3 mt-5" style={filters}>
       <Sortings onSort={onSort} />
-      <TransfersCountFilter />
+      <TransfersCountFilter onTransferChange={onTransferChange} />
       <AmountFilter
+        isValidInput={isValidInput}
         onChange={onChange}
         defaultAmountState={defaultAmountState}
       />
-      <AirlineFilter />
+      <AirlineFilter airlineState={airlineState} onAirline={onAirline} />
     </div>
   );
 };

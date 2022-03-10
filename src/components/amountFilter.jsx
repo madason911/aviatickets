@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-const AmountFilter = ({ defaultAmountState, onChange }) => {
+const AmountFilter = ({ defaultAmountState, onChange, isValidInput }) => {
   const handleChange = (event) => {
     onChange(event);
   };
@@ -25,6 +25,7 @@ const AmountFilter = ({ defaultAmountState, onChange }) => {
           onChange={handleChange}
         />
       </div>
+      {isValidInput ? "" : <p className="text-danger">Данные некорректны!</p>}
     </div>
   );
 };

@@ -5,7 +5,7 @@ const TimeSorting = ({ onSort }) => {
     onSort(item);
   };
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-flex align-items-center p-1">
       <input
         type="radio"
         name="Sorting"

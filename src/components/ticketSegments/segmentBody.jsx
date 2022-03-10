@@ -1,7 +1,12 @@
 import React from "react";
 import moment from "moment/min/moment-with-locales.min";
 
-const SegmentBody = ({ departureDate, legDuration, arrivalDate }) => {
+const SegmentBody = ({
+  departureDate,
+  legDuration,
+  arrivalDate,
+  segmentLen,
+}) => {
   moment.locale("ru");
   const depDate = moment(departureDate).format("D MMM ddd");
   const depTime = moment(departureDate).format("hh:mm");
@@ -11,6 +16,19 @@ const SegmentBody = ({ departureDate, legDuration, arrivalDate }) => {
 
   const separator = {
     borderBottom: "1px solid",
+    position: "relative",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    margin: "4px 60px",
+  };
+
+  const transfer = {
+    position: "absolute",
+    top: "-12px",
+    background: "#fff",
+    padding: "0 8px",
+    color: "#ffc106",
   };
   return (
     <>
@@ -38,7 +56,14 @@ const SegmentBody = ({ departureDate, legDuration, arrivalDate }) => {
           </p>
         </div>
       </div>
-      <div style={separator}></div>
+
+      <div style={separator}>
+        {segmentLen === 1 ? (
+          ""
+        ) : (
+          <p style={transfer}>{`${segmentLen - 1} пересадка`}</p>
+        )}
+      </div>
     </>
   );
 };
