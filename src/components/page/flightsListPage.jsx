@@ -4,8 +4,10 @@ import { paginate } from "../../utils/paginate";
 import Pagination from "../common/pagination";
 import Filters from "../filters/filters";
 import TicketList from "../ui/ticketList";
+import styles from "./flightsListPage.module.css";
 
 const FlightsListPage = () => {
+  console.log(styles);
   const [selectedAirline, setSelectedAirline] = useState([]);
   const [selectedTransfer, setSelectedTransfer] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -114,11 +116,6 @@ const FlightsListPage = () => {
     }
     return [...array];
   };
-  const wrapper = {
-    width: "max-content",
-    fontFamily: "Roboto",
-    background: "#f0f1f4",
-  };
 
   const handleSort = (item) => {
     setSortBy(item);
@@ -160,8 +157,7 @@ const FlightsListPage = () => {
 
   return (
     <div
-      className="container p-3 d-flex justify-content-around"
-      style={wrapper}
+      className={`container p-3 d-flex justify-content-around ${styles.wrapper}`}
     >
       <Filters
         onSort={handleSort}
