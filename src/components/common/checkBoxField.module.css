@@ -1,0 +1,11 @@
+.airline {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amount {
+  width: 50%;
+  white-space: nowrap;
+  color: #0c6efd;
+}

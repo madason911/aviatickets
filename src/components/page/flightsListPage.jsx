@@ -7,8 +7,7 @@ import TicketList from "../ui/ticketList";
 import styles from "./flightsListPage.module.css";
 
 const FlightsListPage = () => {
-  console.log(styles);
-  const [selectedAirline, setSelectedAirline] = useState([]);
+  const [selectedAirlines, setSelectedAirlines] = useState([]);
   const [selectedTransfer, setSelectedTransfer] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState({ path: "amount", order: "asc" });
@@ -16,7 +15,7 @@ const FlightsListPage = () => {
     lower: "0",
     upper: "1000000",
   });
-  const [flightList] = useState(flights.result.flights.slice(0, 50));
+  const [flightList] = useState(flights.result.flights);
   const [airlineState] = useState(getAirlines(flights.result.flights));
   const pageSize = 8;
 
@@ -47,7 +46,7 @@ const FlightsListPage = () => {
         );
       });
     }
-    if (setSelectedTransfer === "oneTrasfer") {
+    if (selectedTransfer === "oneTransfer") {
       return data.filter((item) => {
         const { flight } = item;
         return (
@@ -73,7 +72,7 @@ const FlightsListPage = () => {
     !isNaN(Number(amountState.lower)) &&
     !isNaN(Number(amountState.upper));
 
-  const filterFlightsByAmount = (data) => {
+  const filterAmount = (data) => {
     if (isValidInput) {
       return data.filter((item) => {
         const { flight } = item;
@@ -130,9 +129,9 @@ const FlightsListPage = () => {
 
   const handleAirlineChange = (e) => {
     if (e.target.checked) {
-      setSelectedAirline((prev) => [...prev, e.target.name]);
+      setSelectedAirlines((prev) => [...prev, e.target.name]);
     } else {
-      setSelectedAirline((prev) =>
+      setSelectedAirlines((prev) =>
         prev.filter((item) => item !== e.target.name)
       );
     }
@@ -146,14 +145,26 @@ const FlightsListPage = () => {
     setCurrentPage(pageIndex);
   };
 
-  const filteredFlights = filterFlightsByAmount(flightList);
-  const newFilteredFlights = filterAirlines(filteredFlights, selectedAirline);
+  function filterFlights(data) {
+    let filteredFlights = data;
+    if (selectedTransfer) {
+      filteredFlights = filterTransfer(filteredFlights);
+    }
+    if (selectedAirlines.length !== 0) {
+      filteredFlights = filterAirlines(filteredFlights, selectedAirlines);
+    }
+    if (amountState.lower !== "0" || amountState.upper !== "1000000") {
+      filteredFlights = filterAmount(filteredFlights);
+    }
 
-  const newList = flightsSorting(newFilteredFlights, sortBy.path, sortBy.order);
-  const updatedList = filterTransfer(newList);
+    return filteredFlights;
+  }
 
-  const flightsCount = updatedList.length;
-  const flightsCrop = paginate(updatedList, currentPage, pageSize);
+  const filteredFlightsList = filterFlights(flightList);
+  flightsSorting(filteredFlightsList, sortBy.path, sortBy.order);
+
+  const flightsCount = filteredFlightsList.length;
+  const flightsCrop = paginate(filteredFlightsList, currentPage, pageSize);
 
   return (
     <div
@@ -164,7 +175,7 @@ const FlightsListPage = () => {
         onAmountChange={handleAmountChange}
         onAirlineChange={handleAirlineChange}
         onTransferChange={handleTransferChange}
-        defaultAmountState={amountState}
+        аmountState={amountState}
         airlineState={airlineState}
         isValidInput={isValidInput}
       />

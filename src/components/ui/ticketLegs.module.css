@@ -1,0 +1,10 @@
+.ticket_legs {
+  padding: 10px 10px 0 10px;
+}
+.ticket_leg {
+  font-weight: 700;
+}
+
+.leg_border_bottom {
+  border-bottom: 3px solid #1e7cd0;
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./segmentHeader.module.css";
 
 const SegmentHeader = ({
   departureCity,
@@ -6,17 +7,15 @@ const SegmentHeader = ({
   arrivalCity,
   arrivalAirport,
 }) => {
-  const styleForSpan = {
-    color: "#1e7cd0",
-  };
-
   return (
     <div className="ticket-segment_header p-2">
       <p>
         {`${departureCity?.caption}, ${departureAirport?.caption} `}
-        <span style={styleForSpan}>{`(${departureAirport.uid})`} &#8594; </span>
+        <span className={styles.airport_uid}>
+          {`(${departureAirport.uid})`} &#8594;{" "}
+        </span>
         {`${arrivalCity?.caption}, ${arrivalAirport?.caption} `}
-        <span style={styleForSpan}>{`(${arrivalAirport.uid})`}</span>
+        <span className={styles.airport_uid}>{`(${arrivalAirport.uid})`}</span>
       </p>
       <hr />
     </div>

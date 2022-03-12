@@ -3,27 +3,27 @@ import AirlineFilter from "./airlineFilter";
 import AmountFilter from "./amountFilter";
 import Sortings from "./sortings";
 import TransfersCountFilter from "./transfersCountFilter";
+import styles from "./filters.module.css";
 
 const Filters = ({
   onSort,
   onAmountChange,
-  defaultAmountState,
+  аmountState,
   airlineState,
   onAirlineChange,
   onTransferChange,
   isValidInput,
 }) => {
-  const filters = {
-    width: "20%",
-  };
   return (
-    <div className="filters-sortings p-3 mt-5" style={filters}>
+    <div
+      className={"filters-sortings p-3 mt-5 h-100 bg-white " + styles.filters}
+    >
       <Sortings onSort={onSort} />
       <TransfersCountFilter onTransferChange={onTransferChange} />
       <AmountFilter
         isValidInput={isValidInput}
         onAmountChange={onAmountChange}
-        defaultAmountState={defaultAmountState}
+        аmountState={аmountState}
       />
       <AirlineFilter
         airlineState={airlineState}

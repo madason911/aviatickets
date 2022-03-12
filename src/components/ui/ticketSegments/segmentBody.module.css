@@ -1,0 +1,16 @@
+.separator {
+  border-bottom: 1px solid;
+  position: relative;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 4px 60px;
+}
+
+.transfer {
+  position: absolute;
+  top: -12px;
+  background: #fff;
+  padding: 0 8px;
+  color: #ffc106;
+}

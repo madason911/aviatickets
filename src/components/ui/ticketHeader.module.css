@@ -1,0 +1,22 @@
+.header {
+  background: #1e7cd0;
+  color: white;
+  padding: 5px 15px;
+}
+
+.amount {
+  font-weight: 400;
+  font-size: 30px;
+}
+
+.header_text {
+  margin: 0;
+  line-height: normal;
+}
+
+.carrier {
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  font-weight: bold;
+}

@@ -1,39 +1,24 @@
 import React from "react";
+import styles from "./ticketHeader.module.css";
 
 const TicketHeader = ({ carrier, total }) => {
-  const Header = {
-    background: "#1e7cd0",
-    color: "white",
-    padding: "5px 15px",
-  };
-
-  const Amount = {
-    fontWeight: "400",
-    fontSize: "30px",
-  };
-
-  const Text = {
-    margin: 0,
-    lineHeight: "normal",
-  };
-
-  const Carrier = {
-    display: "flex",
-    alignItems: "center",
-    fontSize: "17px",
-    fontWeight: "bold",
-  };
   return (
     <div
-      className="ticket_header d-flex justify-content-between"
-      style={Header}
+      className={
+        "ticket_header d-flex justify-content-between " + styles.header
+      }
     >
-      <span style={Carrier}>{`${carrier.caption}, ${carrier.uid}`}</span>
+      <span
+        className={styles.carrier}
+      >{`${carrier.caption}, ${carrier.uid}`}</span>
       <div className="text-end">
-        <p style={Text}>
-          <span style={Amount}>{`${total.amount} `}</span> {total.currencyCode}
+        <p className={styles.header_text}>
+          <span className={styles.amount}>{`${total.amount} `}</span>{" "}
+          {total.currencyCode}
         </p>
-        <p style={Text}>Стоимость для одного взрослого пассажира</p>
+        <p className={styles.header_text}>
+          Стоимость для одного взрослого пассажира
+        </p>
       </div>
     </div>
   );

@@ -1,17 +1,18 @@
 import React from "react";
 import TicketHeader from "./ticketHeader";
 import TicketLegs from "./ticketLegs";
+import styles from "./ticket.module.css";
+import Button from "../common/button";
 
 const Ticket = ({ flight }) => {
-  const styleForTicket = {
-    background: "#fff",
-    width: "700px",
+  const handleButtonClick = () => {
+    console.log(flight);
   };
   return (
-    <div className="ticket m-5" style={styleForTicket}>
+    <div className={"ticket m-5 " + styles.ticket_wrapper}>
       <TicketHeader carrier={flight.carrier} total={flight.price.total} />
       <TicketLegs legs={flight.legs} />
-      <button className="btn btn-warning w-100 mt-1">Выбрать</button>
+      <Button onButtonClick={handleButtonClick}>Выбрать</Button>
     </div>
   );
 };

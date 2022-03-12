@@ -1,34 +1,19 @@
 import React from "react";
-import moment from "moment/min/moment-with-locales.min";
+import styles from "./segmentBody.module.css";
+import { getDateFormat } from "../../../utils/getDateFormat";
+import { getDurationFormat } from "../../../utils/getDurationFormat";
 
 const SegmentBody = ({
   departureDate,
   legDuration,
   arrivalDate,
-  segmentLen,
+  transferCount,
 }) => {
-  moment.locale("ru");
-  const depDate = moment(departureDate).format("D MMM ddd");
-  const depTime = moment(departureDate).format("hh:mm");
-  const arrDate = moment(arrivalDate).format("D MMM ddd");
-  const arrTime = moment(arrivalDate).format("hh:mm");
+  const { depDate, depTime, arrDate, arrTime } = getDateFormat(
+    departureDate,
+    arrivalDate
+  );
 
-  const separator = {
-    borderBottom: "1px solid",
-    position: "relative",
-    textAlign: "center",
-    display: "flex",
-    justifyContent: "center",
-    margin: "4px 60px",
-  };
-
-  const transfer = {
-    position: "absolute",
-    top: "-12px",
-    background: "#fff",
-    padding: "0 8px",
-    color: "#ffc106",
-  };
   return (
     <>
       <div className="ticket-segment_body d-flex justify-content-between p-2">
@@ -39,10 +24,7 @@ const SegmentBody = ({
           </p>
         </div>
         <div className="segment-body_route-time">
-          <span>
-            &#128338;{" "}
-            {`${Math.floor(legDuration / 60)} ч ${legDuration % 60} мин`}
-          </span>
+          <span>&#128338; {getDurationFormat(legDuration)}</span>
         </div>
         <div className="segment-body_endpoint destination d-flex">
           <p>
@@ -52,11 +34,11 @@ const SegmentBody = ({
         </div>
       </div>
 
-      <div style={separator}>
-        {segmentLen === 1 ? (
+      <div className={styles.separator}>
+        {transferCount === 1 ? (
           ""
         ) : (
-          <p style={transfer}>{`${segmentLen - 1} пересадка`}</p>
+          <p className={styles.transfer}>{`${transferCount - 1} пересадка`}</p>
         )}
       </div>
     </>

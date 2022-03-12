@@ -1,40 +1,18 @@
 import React from "react";
+import CheckBoxField from "../common/checkBoxField";
 
 const AirlineFilter = ({ airlineState, onAirlineChange }) => {
-  const airline = {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  };
-
-  const amount = {
-    width: "50%",
-    whiteSpace: "nowrap",
-    color: "#0c6efd",
-  };
   return (
     <div className="airlineFilter">
       <h5 className="fw-bold">Авиакомпании</h5>
       {Object.keys(airlineState).map((item) => {
         return (
-          <div
-            className="d-flex justify-content-between p-1 align-items-center"
+          <CheckBoxField
             key={item}
-          >
-            <input
-              type="checkbox"
-              onChange={onAirlineChange}
-              name={`${item}`}
-            />
-            <p className="ms-1" style={airline}>
-              {" "}
-              {item}{" "}
-            </p>
-            <span className="ms-1 text-end" style={amount}>
-              {" "}
-              от {airlineState[item]} р.
-            </span>
-          </div>
+            onChange={onAirlineChange}
+            name={item}
+            amount={airlineState[item]}
+          />
         );
       })}
     </div>

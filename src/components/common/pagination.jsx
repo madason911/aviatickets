@@ -26,7 +26,7 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
 
   checkPaginateLimit();
 
-  if (pagesCount === 1) return null;
+  if (pagesCount <= 1) return null;
   return (
     <nav>
       <ul className="pagination">
