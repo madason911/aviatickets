@@ -19,11 +19,7 @@ const Filters = ({
     >
       <Sortings onSort={onSort} />
       <TransfersCountFilter onTransferChange={onTransferChange} />
-      <AmountFilter
-        isValidInput={isValidInput}
-        onAmountChange={onAmountChange}
-        аmountState={аmountState}
-      />
+      <AmountFilter onAmountChange={onAmountChange} аmountState={аmountState} />
       <AirlineFilter onAirlineChange={onAirlineChange} />
     </div>
   );

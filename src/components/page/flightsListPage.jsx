@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import flights from "../../db/flights.json";
-import { getAirlines, getTickets } from "../../store/tickets";
+import { isValidAmountState } from "../../store/amountState";
+import { getTickets } from "../../store/tickets";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../common/pagination";
 import Filters from "../filters/filters";
@@ -13,11 +13,8 @@ const FlightsListPage = () => {
   const [selectedTransfer, setSelectedTransfer] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState({ path: "amount", order: "asc" });
-  const [amountState, setAmountState] = useState({
-    lower: "0",
-    upper: "1000000",
-  });
-  // const [flightList] = useState(flights.result.flights);
+  const isValid = useSelector(isValidAmountState());
+  const amountState = useSelector((state) => state.amountState);
   const flightList = useSelector(getTickets());
   const pageSize = 8;
 
@@ -52,13 +49,13 @@ const FlightsListPage = () => {
     return data;
   };
 
-  const isValidInput =
-    +amountState.lower < +amountState.upper &&
-    !isNaN(Number(amountState.lower)) &&
-    !isNaN(Number(amountState.upper));
+  // const isValidInput =
+  //   +amountState.lower < +amountState.upper &&
+  //   !isNaN(Number(amountState.lower)) &&
+  //   !isNaN(Number(amountState.upper));
 
   const filterAmount = (data) => {
-    if (isValidInput) {
+    if (isValid) {
       return data.filter((item) => {
         const { flight } = item;
         const amount = +flight.price.total.amount;
@@ -98,13 +95,6 @@ const FlightsListPage = () => {
 
   const handleSort = (item) => {
     setSortBy(item);
-  };
-
-  const handleAmountChange = (e) => {
-    setAmountState((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
   };
 
   const handleAirlineChange = (e) => {
@@ -152,11 +142,9 @@ const FlightsListPage = () => {
     >
       <Filters
         onSort={handleSort}
-        onAmountChange={handleAmountChange}
         onAirlineChange={handleAirlineChange}
         onTransferChange={handleTransferChange}
         аmountState={amountState}
-        isValidInput={isValidInput}
       />
       <div>
         <TicketList flights={flightsCrop} />
