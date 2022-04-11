@@ -9,7 +9,6 @@ const Filters = ({
   onSort,
   onAmountChange,
   аmountState,
-  airlineState,
   onAirlineChange,
   onTransferChange,
   isValidInput,
@@ -25,10 +24,7 @@ const Filters = ({
         onAmountChange={onAmountChange}
         аmountState={аmountState}
       />
-      <AirlineFilter
-        airlineState={airlineState}
-        onAirlineChange={onAirlineChange}
-      />
+      <AirlineFilter onAirlineChange={onAirlineChange} />
     </div>
   );
 };

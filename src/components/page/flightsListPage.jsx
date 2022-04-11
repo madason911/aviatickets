@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import flights from "../../db/flights.json";
+import { getAirlines, getTickets } from "../../store/tickets";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../common/pagination";
 import Filters from "../filters/filters";
@@ -15,26 +17,9 @@ const FlightsListPage = () => {
     lower: "0",
     upper: "1000000",
   });
-  const [flightList] = useState(flights.result.flights);
-  const [airlineState] = useState(getAirlines(flights.result.flights));
+  // const [flightList] = useState(flights.result.flights);
+  const flightList = useSelector(getTickets());
   const pageSize = 8;
-
-  function getAirlines(data) {
-    const result = {};
-
-    data.forEach((item) => {
-      const { flight } = item;
-      const key = flight.carrier.caption;
-      const flightAmount = flight.price.total.amount;
-      if (!result[key]) {
-        result[key] = +flightAmount;
-      } else {
-        result[key] = Math.min(+result[key], +flightAmount);
-      }
-    });
-
-    return result;
-  }
 
   function filterTransfer(data) {
     if (selectedTransfer === "noneTransfer") {
@@ -84,36 +69,31 @@ const FlightsListPage = () => {
   };
 
   const flightsSorting = (array, path, order) => {
-    if (path === "amount") {
-      if (order === "asc") {
-        return [
-          ...array.sort(
+    if (array.length) {
+      if (path === "amount") {
+        if (order === "asc") {
+          array.sort(
             (a, b) =>
               +a.flight.price.total.amount - +b.flight.price.total.amount
-          ),
-        ];
-      }
-      if (order === "desc") {
-        return [
-          ...array.sort(
+          );
+        }
+        if (order === "desc") {
+          array.sort(
             (a, b) =>
               +b.flight.price.total.amount - +a.flight.price.total.amount
-          ),
-        ];
+          );
+        }
       }
-    }
-    if (path === "duration") {
-      return [
-        ...array.sort((a, b) => {
+      if (path === "duration") {
+        array.sort((a, b) => {
           return (
             a.flight.legs[0].duration +
             a.flight.legs[1].duration -
             (b.flight.legs[0].duration + b.flight.legs[1].duration)
           );
-        }),
-      ];
+        });
+      }
     }
-    return [...array];
   };
 
   const handleSort = (item) => {
@@ -161,7 +141,7 @@ const FlightsListPage = () => {
   }
 
   const filteredFlightsList = filterFlights(flightList);
-  flightsSorting(filteredFlightsList, sortBy.path, sortBy.order);
+  // flightsSorting(filteredFlightsList, sortBy.path, sortBy.order);
 
   const flightsCount = filteredFlightsList.length;
   const flightsCrop = paginate(filteredFlightsList, currentPage, pageSize);
@@ -176,7 +156,6 @@ const FlightsListPage = () => {
         onAirlineChange={handleAirlineChange}
         onTransferChange={handleTransferChange}
         аmountState={amountState}
-        airlineState={airlineState}
         isValidInput={isValidInput}
       />
       <div>
