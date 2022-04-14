@@ -66,31 +66,40 @@ const FlightsListPage = () => {
   };
 
   const flightsSorting = (array, path, order) => {
-    if (array.length) {
+    const newArr = [...array];
+    if (newArr.length) {
       if (path === "amount") {
         if (order === "asc") {
-          array.sort(
-            (a, b) =>
-              +a.flight.price.total.amount - +b.flight.price.total.amount
-          );
+          return [
+            ...newArr.sort(
+              (a, b) =>
+                +a.flight.price.total.amount - +b.flight.price.total.amount
+            ),
+          ];
         }
         if (order === "desc") {
-          array.sort(
-            (a, b) =>
-              +b.flight.price.total.amount - +a.flight.price.total.amount
-          );
+          return [
+            ...newArr.sort(
+              (a, b) =>
+                +b.flight.price.total.amount - +a.flight.price.total.amount
+            ),
+          ];
         }
       }
       if (path === "duration") {
-        array.sort((a, b) => {
-          return (
-            a.flight.legs[0].duration +
-            a.flight.legs[1].duration -
-            (b.flight.legs[0].duration + b.flight.legs[1].duration)
-          );
-        });
+        return [
+          ...newArr.sort((a, b) => {
+            return (
+              a.flight.legs[0].duration +
+              a.flight.legs[1].duration -
+              (b.flight.legs[0].duration + b.flight.legs[1].duration)
+            );
+          }),
+        ];
       }
     }
+
+    return newArr;
   };
 
   const handleSort = (item) => {
@@ -131,10 +140,14 @@ const FlightsListPage = () => {
   }
 
   const filteredFlightsList = filterFlights(flightList);
-  // flightsSorting(filteredFlightsList, sortBy.path, sortBy.order);
+  const sortedFlights = flightsSorting(
+    filteredFlightsList,
+    sortBy.path,
+    sortBy.order
+  );
 
-  const flightsCount = filteredFlightsList.length;
-  const flightsCrop = paginate(filteredFlightsList, currentPage, pageSize);
+  const flightsCount = sortedFlights.length;
+  const flightsCrop = paginate(sortedFlights, currentPage, pageSize);
 
   return (
     <div
