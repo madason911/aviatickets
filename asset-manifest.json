@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/aviatickets/static/css/main.42b1c0a7.css",
+    "main.js": "/aviatickets/static/js/main.f0df6586.js",
+    "index.html": "/aviatickets/index.html",
+    "main.42b1c0a7.css.map": "/aviatickets/static/css/main.42b1c0a7.css.map",
+    "main.f0df6586.js.map": "/aviatickets/static/js/main.f0df6586.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.42b1c0a7.css",
+    "static/js/main.f0df6586.js"
+  ]
+}
